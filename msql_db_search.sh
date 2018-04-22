@@ -40,7 +40,7 @@ for TABLE in `mysql --login-path=local $DB -e "show tables" | grep -v \`mysql --
 do
     for COLUMN in `mysql --login-path=local $DB -e "desc $TABLE" | grep -v \`mysql --login-path=local $DB -e "desc $TABLE" | head -1\` | grep -v int | awk '{print $1}'`
     do
-        if [ `mysql --login-path=local $DB -e "Select * from $TABLE where $COLUMN='$SEARCHSTRING'" | wc -l` -gt 1 ]
+        if [ `mysql --login-path=local $DB -e "Select * from $TABLE where $COLUMN LIKE '%$SEARCHSTRING%'" | wc -l` -gt 1 ]
         then
             if [ "$TABLE" != "$UNIQTB" ]; then
                 UNIQTB=$TABLE
